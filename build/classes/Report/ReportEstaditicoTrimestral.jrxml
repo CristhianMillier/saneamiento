@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="98174725-2315-4d5b-82f4-ec27621fb1cb">
+	<property name="ireport.zoom" value="1.5394743546921197"/>
+	<property name="ireport.x" value="139"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="anio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mes" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT CONCAT(YEAR(Ca.fechaPago), ' Q', DATEPART(q, Ca.fechaPago)) as trimestre, SUM(Ca.totalPago) AS ingreso
+FROM Caja Ca INNER JOIN Vivienda V ON Ca.idVivienda = V.idVivienda INNER JOIN Contribuyente C ON 
+V.idContribuyente = C.idContribuyente WHERE YEAR(Ca.fechaPago) >= 2023 AND MONTH(Ca.fechaPago) >=
+1 GROUP BY YEAR(Ca.fechaPago), DATEPART(q, Ca.fechaPago)
+ORDER BY YEAR(Ca.fechaPago), DATEPART(q, Ca.fechaPago)]]>
+	</queryString>
+	<field name="trimestre" class="java.lang.String"/>
+	<field name="ingreso" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<staticText>
+				<reportElement x="181" y="26" width="621" height="46" uuid="eee7efe4-0ccf-4a98-a38e-a593fd6883ea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DISTRITAL DE COPALLIN
+REPORTE ESTADÍSTICO DE INGRESOS TRIMESTRALES
+]]></text>
+			</staticText>
+			<image>
+				<reportElement x="91" y="0" width="90" height="95" uuid="0bcf6742-11b9-4678-8d74-b9486a333c05"/>
+				<imageExpression><![CDATA["C:\\Users\\Millier\\OneDrive\\Desktop\\Trabajos\\Saniamiento_RDR\\src\\Imagenes\\logo3.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20">
+			<rectangle>
+				<reportElement x="321" y="0" width="230" height="20" backcolor="#CCCCCC" uuid="96404f59-fec6-40ee-ba18-825a21dd7120"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="321" y="0" width="116" height="20" uuid="51842914-3e7c-40e2-b534-320306f5a9bd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TRIMESTRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="0" width="100" height="20" uuid="5e47780b-3eca-45cc-96aa-e9b1974551a1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INGRESO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="445" y="0" width="1" height="20" uuid="029f973b-97e5-4175-8669-4817627d5212"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<rectangle>
+				<reportElement x="321" y="0" width="230" height="20" uuid="85193133-662a-47ee-85cb-61a3ca7151e9"/>
+			</rectangle>
+			<textField>
+				<reportElement x="323" y="0" width="116" height="20" uuid="f1c758b8-85cf-424c-ba5f-d4cc838a8043"/>
+				<textFieldExpression><![CDATA[$F{trimestre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="451" y="0" width="100" height="20" uuid="2d59625e-ecca-4ec0-b27b-f0cc6a057836"/>
+				<textFieldExpression><![CDATA[$F{ingreso}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="445" y="0" width="1" height="20" uuid="404819fa-e2e5-4806-9bcb-af3c462e1802"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="305">
+			<stackedBar3DChart>
+				<chart>
+					<reportElement x="0" y="1" width="802" height="304" uuid="507ae9c6-10e7-48be-8030-e1ccd4d2b772"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{trimestre}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{trimestre}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{ingreso}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</stackedBar3DChart>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20">
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="false">
+				<reportElement x="0" y="0" width="207" height="20" uuid="793e8ae9-244d-4c65-a74f-e8b2fe4ebee5"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd 'de' MMMM 'de' yyyy").format(new java.util.Date()).toString().toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="661" y="0" width="100" height="20" uuid="1aaf23d9-a10a-47a2-9358-0acf1333f26e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="761" y="0" width="41" height="20" uuid="e0ba34f3-93b8-4026-9f64-0f82b63d68aa"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="11dfee24-b438-4528-8664-95fae1539e0a">
+	<property name="ireport.zoom" value="1.5026296018031553"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="emision" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select C.idContribuyente, RS.anio, trim(RS.mes) as mes, trim(convert(VARCHAR(10), RS.fechaEmision, 103)) 
+as fechaEmision, trim(convert(VARCHAR(10), RS.fechaPago, 103)) as fechaPago, RS.impAgua, CASE WHEN RS.total is null THEN RS.impAgua ELSE RS.total END AS total,
+RS.ticket, CONCAT(TRIM(V.direcion), ' ', TRIM(V.nroVivienda)) AS Direccion, CASE WHEN C.razonSocial IS NULL 
+THEN CONCAT(TRIM(C.apellido), ' ', TRIM(C.nombre)) ELSE C.razonSocial END AS Contribuyente, CASE WHEN RS.deuda is null THEN 0.00 
+ELSE RS.deuda END AS deuda, CASE WHEN RS.deuda IS NULL THEN ''
+ELSE 'SR(A). USUARIO USTED TIENE  DEUDA PENDIENTE, PAGUE A TIEMPO SU RECIBO, EVITE CORTES.' END AS mensaje
+from ReciboSaniamiento RS inner join Vivienda V on RS.idVivienda = V.idVivienda inner join Contribuyente C on 
+V.idContribuyente = C.idContribuyente where anio = YEAR(GETDATE()) AND fechaEmision = $P{emision}]]>
+	</queryString>
+	<field name="idContribuyente" class="java.lang.Integer"/>
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="mes" class="java.lang.String"/>
+	<field name="fechaEmision" class="java.lang.String"/>
+	<field name="fechaPago" class="java.lang.String"/>
+	<field name="impAgua" class="java.math.BigDecimal"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="ticket" class="java.lang.String"/>
+	<field name="Direccion" class="java.lang.String"/>
+	<field name="Contribuyente" class="java.lang.String"/>
+	<field name="deuda" class="java.math.BigDecimal"/>
+	<field name="mensaje" class="java.lang.String"/>
+	<detail>
+		<band height="194" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="0" y="0" width="328" height="178" uuid="0595a541-5869-4ec1-9f71-4419bd9aba9e"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="199" y="3" width="120" height="40" uuid="a4d4cfcf-a40f-41a3-97a2-966b939e3f34"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="10" y="76" width="309" height="82" uuid="e3bdc227-a657-4925-9516-ed3289ebf660"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="10" y="46" width="309" height="25" uuid="62f01a3d-371d-45f5-830c-04ee62e34859"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="201" y="28" width="45" height="12" uuid="7618cbab-b428-45b3-b9fe-0f468078995b"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="116" width="207" height="10" uuid="9a8dca3b-7acc-4cc5-a87e-b1eafe49294c"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[El servicio de Baja Policia es Cortesia de la Municipalidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="76" width="83" height="10" uuid="79ee52df-bbb3-4a56-9a7d-161c7d5e5a15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Pago por Mes Actual -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="15" width="45" height="12" uuid="36838249-b531-4ddb-b201-664ee661c32a"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERIODO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="126" width="207" height="10" uuid="79256961-3ff6-4638-b43e-f20350d67d3d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[En caso de Incumplimiento de PAGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="96" width="207" height="10" uuid="fdf30960-965a-42a6-b187-b79db9c508f5"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Multas según Ordenanza Municipal N° 003-2003 / MDC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="106" width="207" height="10" uuid="642c0827-ed49-472b-b15a-a093fccef008"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[T O T A L    A    P A G A R]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="86" width="207" height="10" uuid="2714477e-1ffd-428b-9dc2-c473e423dd1e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Pago por Deuda Acumulada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="3" width="118" height="12" uuid="3ebf17e3-e4d8-442c-afa6-71857ba0c856"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.U.C. N° 20185607471]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="146" width="262" height="10" uuid="f89746e5-1b9e-46c4-843d-dcf37df0218a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[NO OLVIDE CANCELAR CON ESTE RECIBO EN LA MUNICIPALIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="136" width="55" height="10" uuid="46450695-0596-4f36-bacd-2c9cd3a514af"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Corte:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="46" width="30" height="10" uuid="7f1f663b-35b4-48dc-a8fa-0e73d7c49fb8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="46" width="30" height="10" uuid="6316e6ea-0cda-45b2-8096-782d15e8f625"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[USUARIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="58" width="35" height="10" uuid="0961e407-01d0-449b-9019-c2dad9b5343e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOMICILIO:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="3" width="35" height="40" uuid="7d755c90-f8d0-44ac-a102-8f84b5405c4d"/>
+				<imageExpression><![CDATA["C:\\Users\\Millier\\OneDrive\\Desktop\\Trabajos\\Saniamiento_RDR\\src\\Imagenes\\logo4.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="199" y="14" width="120" height="1" uuid="b3f7e518-66d9-4236-926e-965e973f7fc1"/>
+			</line>
+			<rectangle radius="10">
+				<reportElement x="10" y="163" width="309" height="13" uuid="025827eb-488a-4298-bf1a-a123face0523"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="15" y="163" width="60" height="13" uuid="0111cdf5-2ef1-4e35-ab90-cec19cfe74b8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE EMISIÓN:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="15" width="139" height="20" uuid="fae326a3-604a-4f2f-8c69-b1f514de8c5b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RECIBO DE AGUA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="163" width="71" height="13" uuid="8422f1db-cccc-4943-8b59-4a806c680fcc"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ÚLTIMO DÍA DE PAGO:]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="341" y="0" width="214" height="178" uuid="bce9bd30-7b45-4523-a7fc-83eafb7a7c58"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="354" y="118" width="190" height="25" uuid="ec4dc291-c189-45d9-b22a-aca6b0175bbd"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="411" y="4" width="128" height="26" uuid="46346daa-b784-46c6-bae6-9c6305321e46"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="354" y="40" width="190" height="75" uuid="dd8f4a47-2ffb-4356-84f7-4649ab52b566"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="419" y="16" width="53" height="12" uuid="9255ab59-9c33-4533-893e-6e6aacc4abc3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="364" y="93" width="100" height="10" uuid="8a30e117-788c-43e0-b91a-1ddd7185b5a8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Multas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="244" y="100" width="66" height="10" uuid="48f254c5-a52a-4298-aa87-fb336abd3e63"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[0.00]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="364" y="103" width="100" height="10" uuid="b72efc4d-9014-4a99-b44d-0955c30704aa"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL A PAGAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="364" y="73" width="45" height="10" uuid="253e741f-2756-42ab-80cf-ae1690eabf37"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Mes Actual -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="119" width="69" height="10" uuid="d523dd2f-c2b6-434c-b8ea-45ee2c0317ad"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA DE EMISIÓN:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="364" y="83" width="100" height="10" uuid="3d38c4ba-c0e6-4dc1-808f-9c7f2d4c913d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Deuda Acumulada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="4" width="53" height="12" uuid="b6c07469-5dca-4677-b95d-5c6ca1fceb05"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERIODO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="464" y="93" width="64" height="10" uuid="053d8c99-9160-4c84-a7f5-f345dea24186"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[0.00]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="365" y="131" width="69" height="10" uuid="732348d7-0aa6-4040-a25e-656dce70d8d9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ÚLTIMO DÍA DE PAGO:]]></text>
+			</staticText>
+			<image>
+				<reportElement x="354" y="3" width="30" height="35" uuid="9453cbba-a2fa-434d-97d3-634419f7147b"/>
+				<imageExpression><![CDATA["C:\\Users\\Millier\\OneDrive\\Desktop\\Trabajos\\Saniamiento_RDR\\src\\Imagenes\\logo4.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="348" y="145" width="196" height="30" forecolor="#FF0000" uuid="69f5ff8a-f659-4542-bed6-2bf02f15fb58"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mensaje}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="98" y="76" width="96" height="10" uuid="48b48684-cc63-40b4-91ce-0b54e312b5d3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="46" width="173" height="10" uuid="5fb6f7c3-c9a0-4391-9fe1-16d263f0c01f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Contribuyente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="244" y="76" width="66" height="10" uuid="41164e0e-2c7b-4890-ba1c-f367dfaea9ee"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{impAgua}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="244" y="88" width="66" height="10" uuid="21c9b9dd-3894-4d48-9eed-896ea4cbd587"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deuda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="246" y="28" width="66" height="12" uuid="4f46ab1d-55ea-4ae0-8030-ac2a99b1380a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ticket}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="232" y="163" width="60" height="13" uuid="bd475edd-d2d7-4a18-b3d2-7107628ea3cc"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaPago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="244" y="112" width="66" height="10" uuid="e8aba23c-4454-45a4-aeac-b5e481204d19"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="58" width="252" height="10" uuid="5400fa9f-8bb9-4a27-afd4-dfbd7a5f08e8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="98" y="136" width="76" height="10" uuid="dc8c18c6-7598-42e9-93a7-594081dd6f85"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaPago}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="246" y="15" width="66" height="12" uuid="c3b3bfb3-1ede-4922-b18b-ce456f013a5f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="52" y="46" width="45" height="10" uuid="98649bad-d343-441b-b146-42036d7d0419"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idContribuyente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="163" width="60" height="13" uuid="86031349-fc91-434d-809d-0a122602b258"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaEmision}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="364" y="61" width="164" height="10" uuid="8a050499-107a-4fe6-a752-adec1bed5142"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="464" y="83" width="64" height="10" uuid="8a9cdde8-fa7c-451b-b8a7-1d21d0e00c11"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deuda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="364" y="51" width="164" height="10" uuid="fbbbe5c6-23d2-49d5-9b7f-31c670470b58"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Contribuyente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="16" width="60" height="12" uuid="4c893210-731d-489b-b3a2-54845fdf00d6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ticket}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="364" y="41" width="119" height="10" uuid="ad609f11-befa-4f3d-beca-308eb4abcef4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idContribuyente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="472" y="4" width="60" height="12" uuid="30eeacf9-3d32-469a-af73-8200f734b578"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="409" y="73" width="55" height="10" uuid="768db377-8d56-467c-9f70-712ba9c3d89a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="464" y="73" width="64" height="10" uuid="4fdfa29f-1e43-4435-b381-01b8adbe1f4d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{impAgua}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="464" y="103" width="64" height="10" uuid="9e9308a4-74c3-41d0-845a-ac239f3d1906"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="119" width="79" height="10" uuid="7c93d496-1c8d-4070-9734-c32d710b3fd4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaEmision}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="131" width="79" height="10" uuid="fa444c9b-99ec-4f1e-a364-84f2a6c72c44"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaPago}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-17" y="185" width="589" height="1" uuid="ad1209c3-2ded-4336-9380-c499f257601d"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

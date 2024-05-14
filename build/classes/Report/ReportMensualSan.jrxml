@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a715dc72-3ea3-481a-8368-ad0c974b8c26">
+	<property name="ireport.zoom" value="1.8150000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="anio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mes" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="totalPago" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select CASE WHEN C.razonSocial IS NULL THEN CONCAT(TRIM(C.apellido), ' ', TRIM(C.nombre)) ELSE C.razonSocial END AS Contribuyente,
+SUM(Ca.totalPago) as pago from Caja Ca inner join Vivienda V on Ca.idVivienda = V.idVivienda inner join Contribuyente C on V.idContribuyente = 
+C.idContribuyente where YEAR(Ca.fechaPago) = $P{anio} AND MONTH(Ca.fechaPago) = $P{mes} GROUP BY Ca.idVivienda, C.razonSocial, C.nombre, C.apellido]]>
+	</queryString>
+	<field name="Contribuyente" class="java.lang.String"/>
+	<field name="pago" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="103" splitType="Stretch">
+			<staticText>
+				<reportElement x="128" y="10" width="427" height="53" uuid="7ef4448d-7c3d-46e5-989e-79d428b0e8f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DISTRITAL DE COPALLIN
+REPORTE DE RECAUDACIÓN DE INGRESOS MENSUALES]]></text>
+			</staticText>
+			<image>
+				<reportElement x="25" y="0" width="90" height="95" uuid="a84dd9f6-9f92-4868-9a25-1eab0c1a4406"/>
+				<imageExpression><![CDATA["C:\\Users\\Millier\\OneDrive\\Desktop\\Trabajos\\Saniamiento_RDR\\src\\Imagenes\\logo3.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="128" y="75" width="193" height="20" uuid="0bb143dd-3f2b-4ead-b206-62112e677086"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL DE INGRESOS DEL MES:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="324" y="75" width="158" height="20" uuid="491657a4-759e-4a37-aff7-2e63ef111914"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalPago}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" backcolor="#CCCCCC" uuid="dd1e4795-dcf3-48ae-93f4-df1664bf70e7"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="392" height="20" uuid="0b3d0058-24dd-4120-b319-5e5e5c1428cb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONTRIBUYENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="0" width="163" height="20" uuid="c791223e-8516-4ce1-97e4-a2639c22577d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAGO REALIZADO (S/.)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="392" y="0" width="1" height="20" uuid="173549f6-3000-463d-ad20-ce984543f95c"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" uuid="46ed9756-d5a1-4342-baf3-8c60850b6f78"/>
+			</rectangle>
+			<textField>
+				<reportElement x="2" y="0" width="390" height="20" uuid="8a99646e-a362-40a9-965d-a6054ccc48df"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Contribuyente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="394" y="0" width="160" height="20" uuid="44076a9d-ed18-4136-b18a-6f0e14edc616"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pago}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="392" y="0" width="1" height="20" uuid="c9b23db2-41a0-4530-a7a6-0bab21cd4325"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="0" width="164" height="20" uuid="532ac28a-7ebb-4a59-a372-9832cb11be66"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd 'de' MMMM 'de' yyyy").format(new java.util.Date()).toString().toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="514" y="1" width="40" height="20" uuid="75945963-beed-48b3-9d39-25e19f585f96"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="1" width="80" height="20" uuid="98da49a9-428c-4972-b360-3ea18b058e90"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

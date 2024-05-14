@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="98174725-2315-4d5b-82f4-ec27621fb1cb">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="174"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="anio" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT YEAR(Ca.fechaPago) as anio, SUM(Ca.totalPago) AS ingreso
+FROM Caja Ca INNER JOIN Vivienda V ON Ca.idVivienda = V.idVivienda INNER JOIN Contribuyente C ON 
+V.idContribuyente = C.idContribuyente WHERE YEAR(Ca.fechaPago) >= 2023 GROUP BY YEAR(Ca.fechaPago) ORDER BY YEAR(Ca.fechaPago)]]>
+	</queryString>
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="ingreso" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<staticText>
+				<reportElement x="181" y="26" width="621" height="46" uuid="eee7efe4-0ccf-4a98-a38e-a593fd6883ea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DISTRITAL DE COPALLIN
+REPORTE ESTADÍSTICO DE INGRESOS ANUALES]]></text>
+			</staticText>
+			<image>
+				<reportElement x="91" y="0" width="90" height="95" uuid="0bcf6742-11b9-4678-8d74-b9486a333c05"/>
+				<imageExpression><![CDATA["C:\\Users\\Millier\\OneDrive\\Desktop\\Trabajos\\Saniamiento_RDR\\src\\Imagenes\\logo3.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20">
+			<rectangle>
+				<reportElement x="321" y="0" width="230" height="20" backcolor="#CCCCCC" uuid="96404f59-fec6-40ee-ba18-825a21dd7120"/>
+			</rectangle>
+			<line>
+				<reportElement x="445" y="0" width="1" height="20" uuid="029f973b-97e5-4175-8669-4817627d5212"/>
+			</line>
+			<staticText>
+				<reportElement x="332" y="0" width="110" height="20" uuid="8c5ea2ff-ab36-415b-bfe8-7427c46aacd8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[AÑO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="0" width="100" height="20" uuid="efce2425-4ceb-4a1d-9f42-655f40b2f899"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[INGRESO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<rectangle>
+				<reportElement x="321" y="0" width="230" height="20" uuid="85193133-662a-47ee-85cb-61a3ca7151e9"/>
+			</rectangle>
+			<line>
+				<reportElement x="445" y="0" width="1" height="20" uuid="404819fa-e2e5-4806-9bcb-af3c462e1802"/>
+			</line>
+			<textField>
+				<reportElement x="332" y="0" width="110" height="20" uuid="dcb02fd8-0904-4604-986b-e0e6a7d1f5c8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="451" y="0" width="100" height="20" uuid="2f55a103-4b12-45d6-9775-be97db34e163"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ingreso}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="305">
+			<stackedBar3DChart>
+				<chart>
+					<reportElement x="0" y="0" width="802" height="305" uuid="924b1e36-286b-4f5c-87f1-f531e1e8c4c7"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{anio}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{anio}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{ingreso}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</stackedBar3DChart>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20">
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="false">
+				<reportElement x="0" y="0" width="207" height="20" uuid="793e8ae9-244d-4c65-a74f-e8b2fe4ebee5"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd 'de' MMMM 'de' yyyy").format(new java.util.Date()).toString().toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="661" y="0" width="100" height="20" uuid="1aaf23d9-a10a-47a2-9358-0acf1333f26e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="761" y="0" width="41" height="20" uuid="e0ba34f3-93b8-4026-9f64-0f82b63d68aa"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

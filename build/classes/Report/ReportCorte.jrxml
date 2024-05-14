@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3eed3ef0-4a02-4b7c-aee2-468e51f806ec">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="logo" class="java.io.InputStream"/>
+	<queryString>
+		<![CDATA[SELECT RS.idVivienda, CASE WHEN C.razonSocial IS NULL THEN CONCAT(TRIM(C.apellido), ' ', TRIM(C.nombre)) ELSE C.razonSocial END AS Contribuyente,
+CONCAT(TRIM(V.direcion), ' ', TRIM(V.nroVivienda)) AS Direccion, count(RS.idVivienda) as MesesTot, STRING_AGG(' ' + LEFT(mes, 3), ', ') as Meses
+FROM ReciboSaniamiento RS inner join Vivienda V on RS.idVivienda = V.idVivienda
+inner join Contribuyente C on V.idContribuyente = C.idContribuyente
+WHERE estadoPago = 'No pago' AND fechaEmision <= DATEADD(DAY, 15, EOMONTH(GETDATE(), -2)) 
+GROUP BY RS.idVivienda, C.razonSocial, C.nombre, C.apellido, V.direcion, V.nroVivienda]]>
+	</queryString>
+	<field name="idVivienda" class="java.lang.Integer"/>
+	<field name="Contribuyente" class="java.lang.String"/>
+	<field name="Direccion" class="java.lang.String"/>
+	<field name="MesesTot" class="java.lang.Integer"/>
+	<field name="Meses" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="146" splitType="Stretch">
+			<staticText>
+				<reportElement x="165" y="38" width="390" height="26" uuid="66970cbf-8429-4917-b388-7146114542b2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DISTRITAL DE COPALLIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="64" width="390" height="26" uuid="a179c6f5-562b-421c-9a50-3513dfef0115"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE PARA CORTE DE AGUA]]></text>
+			</staticText>
+			<image>
+				<reportElement x="21" y="8" width="120" height="127" uuid="44115d33-ed62-452a-a6b4-effbbce6214e"/>
+				<imageExpression><![CDATA["C:\\Users\\Millier\\OneDrive\\Desktop\\Trabajos\\Saniamiento_RDR\\src\\Imagenes\\logo2.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" backcolor="#CCCCCC" uuid="1490489e-aab8-483e-a621-859cd7679631"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="201" height="20" uuid="45e02004-d7dd-412d-a624-0b2ebbb2ceea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONTRIBUYENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="0" width="167" height="20" uuid="83a7bb6a-7dae-46f0-a728-67c814f2164e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="0" width="163" height="20" uuid="6c257e29-4950-4880-a053-28913c33271c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MESES SIN PAGAR]]></text>
+			</staticText>
+			<line>
+				<reportElement x="203" y="0" width="1" height="20" uuid="a4de93ac-7a69-4832-8f2a-ca94bb1f1b9e"/>
+			</line>
+			<line>
+				<reportElement x="376" y="0" width="1" height="20" uuid="6a92f771-b10b-4325-9450-1e3a6ceb596e"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" uuid="63614f3c-5cb3-47a4-8bd2-e343167c029a"/>
+			</rectangle>
+			<textField>
+				<reportElement x="1" y="0" width="201" height="20" uuid="fd6ebf76-ea9f-49d6-a666-c814d0e6e33a"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Contribuyente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="206" y="0" width="167" height="20" uuid="0bd4813a-2c8d-40ab-9c0c-5c7b31217567"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="379" y="0" width="163" height="20" uuid="d59130a8-5360-46c7-81a5-15a4a55db1c5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Meses}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="203" y="0" width="1" height="20" uuid="d649a9e3-3f81-490a-886d-3253629c0861"/>
+			</line>
+			<line>
+				<reportElement x="376" y="0" width="1" height="20" uuid="2ae06ef6-38a2-4f51-95c9-69087be70183"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21">
+			<textField>
+				<reportElement x="0" y="0" width="165" height="20" uuid="201e4119-ec77-45f2-8848-294be6ad9e35"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd 'de' MMMM 'de' yyyy").format(new java.util.Date()).toString().toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="515" y="0" width="40" height="20" uuid="1184382d-2a2f-4733-a16a-e36eb2b7bbd9"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="0" width="80" height="20" uuid="7f4fba69-c62c-4d15-b91f-3b6c283ef92d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

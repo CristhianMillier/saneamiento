@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1c198c21-79e6-4b17-941b-c5e5a7633f4f">
+	<property name="ireport.zoom" value="1.8660295208389333"/>
+	<property name="ireport.x" value="28"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     M."deudaTotal" AS deudaTotal,
+	 CONCAT(TRIM(V.direcion), ' ', TRIM(V.nroVivienda)) AS direccion, 
+	 CASE WHEN C.razonSocial IS NULL THEN CONCAT(TRIM(C.apellido), ' ', TRIM(C.nombre)) ELSE C.razonSocial END AS contribuyente
+FROM
+     "dbo"."Vivienda" V INNER JOIN "dbo"."Morosos" M ON V."idVivienda" = M."idVivienda"
+     INNER JOIN "dbo"."Contribuyente" C ON V."idContribuyente" = C."idContribuyente"]]>
+	</queryString>
+	<field name="deudaTotal" class="java.math.BigDecimal"/>
+	<field name="direccion" class="java.lang.String"/>
+	<field name="contribuyente" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<image>
+				<reportElement x="33" y="0" width="90" height="95" uuid="f97c1c26-dd66-4915-bf9a-88ecf34c2a1c"/>
+				<imageExpression><![CDATA["C:\\Users\\Millier\\OneDrive\\Desktop\\Trabajos\\Saniamiento_RDR\\src\\Imagenes\\logo3.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="136" y="25" width="419" height="48" uuid="dade7ff3-c8a8-44ae-ae96-5d05c8e6a9a7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DISTRITAL DE COPALLIN
+REPORTE DE MOROSOS GENERAL]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" backcolor="#CCCCCC" uuid="56b9a030-c7c9-4415-a2ad-27f3c9a17d5f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="241" height="20" uuid="809c252b-f06a-4d73-a730-246570f34f76"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONTRIBUYENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="0" width="194" height="20" uuid="92aefeb9-b9cf-4889-b5dd-b4dc9850c4f2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="20" uuid="ea9b4b59-931a-4eae-baa1-36cfd3889a11"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DEUDA TOTAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="245" y="0" width="1" height="20" uuid="99c30dd5-79ae-4a69-8364-fe6fa9a504fd"/>
+			</line>
+			<line>
+				<reportElement x="449" y="0" width="1" height="20" uuid="35c764ed-d250-45e4-93c4-9b5d32e472b5"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="20" uuid="4995bdf1-a673-4e1c-83e7-708bca69df5f"/>
+			</rectangle>
+			<textField>
+				<reportElement x="2" y="0" width="241" height="20" uuid="440fd7b5-7ad6-48d9-b6a4-86117391cbea"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{contribuyente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="251" y="0" width="194" height="20" uuid="83d6b5b4-8a26-4e18-94e8-a1566d870ba4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="38968e6e-777b-42c8-8d82-d1bcb97ef9c4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deudaTotal}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="245" y="1" width="1" height="20" uuid="6618b95a-1ae8-4ee8-bb60-a585a72afcc6"/>
+			</line>
+			<line>
+				<reportElement x="449" y="0" width="1" height="20" uuid="eaf07f3e-4782-4f4e-b0bb-1dab70f76495"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="21">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="0" width="164" height="20" uuid="532ac28a-7ebb-4a59-a372-9832cb11be66"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("EEEE, dd 'de' MMMM 'de' yyyy").format(new java.util.Date()).toString().toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="514" y="0" width="40" height="20" uuid="75945963-beed-48b3-9d39-25e19f585f96"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="0" width="80" height="20" uuid="98da49a9-428c-4972-b360-3ea18b058e90"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
